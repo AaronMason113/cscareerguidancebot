@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml version="2.0">
+
+<category>
+    <pattern>*</pattern>
+    <template>
+        <condition name = "greeting">
+            <li value = "unknown"><srai>3F9aDxGREETINGx7BcE5</srai></li>
+            <li value = "given">
+                Please stick to the responses provided by the buttons.<split/>
+                <condition name = "start">
+                    <li value = "unknown"><srai>9bRcExSTARTx3fDgT</srai></li>
+                    <li value = "yes"><srai>1mT7WxCONTINUEx8bN5R</srai></li>
+                </condition>
+            </li>
+        </condition>
+    </template>
+</category>
+
+<category>
+    <pattern>3F9aDxGREETINGx7BcE5</pattern>
+    <template>
+        <think><set name = "start">unknown</set></think>
+         Hi there! I am your Computer Science Career Guidance bot, 
+        and I'm here to help you determine a career path.
+        <split/>
+        I would like to ask you a series of 30 questions
+        designed to hone in on your abilities and
+        preferences.<break/>
+        <srai>9bRcExSTARTx3fDgT</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>6A8sDxSTARTNOx2P7wE</pattern>
+    <template>
+        Okay. I did not perform a career analysis at this time. <srai>4hYsTxENDx1nJwR</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>9bRcExSTARTx3fDgT</pattern>
+    <template>Are you ready to get started?
+        <think><set name="greeting">given</set></think>
+        <reply>
+            <text>Yes!</text>
+            <postback>7FtR2xSTARTYESx9dGqK</postback>
+        </reply>
+        <reply>
+            <text>No, thank you.</text>
+            <postback>6A8sDxSTARTNOx2P7wE</postback>
+        </reply>
+    </template>
+</category>
+
+<category>
+    <pattern>1mT7WxCONTINUEx8bN5R</pattern>
+    <template>
+        <reply>
+            <text>Continue</text>
+            <postback>5eH7RxQUESTIONx9bP4W</postback>
+        </reply>
+        <reply>
+            <text>Exit now</text>
+            <postback>6A8sDxSTARTNOx2P7wE</postback>
+        </reply>
+    </template>
+</category>
+
+<category>
+    <pattern>7FtR2xSTARTYESx9dGqK</pattern>
+    <template>
+        <!--Initializing variables-->
+        <think>
+            <set name="start">yes</set>
+            <set name="na#">0</set>
+            <set name="sa#">0</set>
+            <set name="isa#">0</set>
+            <set name="sd#">0</set>
+            <set name="wd#">0</set>
+            <set name="q#">1</set>
+        </think>
+        Great! I'm going to ask you about various job tasks, 
+        and I would like you to respond to each question with 
+        a "thumbs-up" or a "thumbs-down" based on your own
+        positive or negative feelings about performing
+        or learning that task. You may exit at any time,
+        but I recommend answering all 30 questions so
+        I can give you my best analysis.
+        <srai>1mT7WxCONTINUEx8bN5R</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>5eH7RxQUESTIONx9bP4W</pattern>
+    <template>
+        <condition name = "q#">
+            <li value="31"><srai>8jR6FxTALLYx4pL2Q</srai></li>
+            <li>
+                Question #<get name = "q#"/><break/><break/>
+                <think>
+                    <set name = "qcode"><map name = "qmap"><get name = "q#"/></map></set>
+                    <set name = "question"><map name = "questions"><get name = "qcode"/></map></set>
+                </think>
+                How do you feel about:<break/><break/>
+                <get name = "question"/>?
+                <reply>
+                    <text>👍</text>
+                    <postback>3nT8RxTHUMBSUPx7sK6F</postback>
+                </reply>
+                <reply>
+                    <text>👎</text>
+                    <postback>9eR7TxTHUMBSDOWNx4pQ2W</postback>
+                </reply>
+                <reply>
+                    <text>Exit Now</text>
+                    <postback>6A8sDxSTARTNOx2P7wE</postback>
+                </reply>
+            </li>
+            
+        </condition>
+    </template>
+</category>
+
+<category>
+    <pattern>3nT8RxTHUMBSUPx7sK6F</pattern>
+    <template>
+        <think>
+            <set name = "category"><map name = "categories"><get name = "qcode"/></map></set>
+            <condition name = "category">
+                <li value = "na">
+                    <set name = "na#">
+                        <map name = "successor"><get name = "na#"/></map>
+                    </set>
+                </li>
+                <li value = "sa">
+                    <set name = "sa#">
+                        <map name = "successor"><get name = "sa#"/></map>
+                    </set>
+                </li>
+                <li value = "isa">
+                    <set name = "isa#">
+                        <map name = "successor"><get name = "isa#"/></map>
+                    </set>
+                </li>
+                <li value = "sd">
+                    <set name = "sd#">
+                        <map name = "successor"><get name = "sd#"/></map>
+                    </set>
+                </li>
+                <li value = "wd">
+                    <set name = "wd#">
+                        <map name = "successor"><get name = "wd#"/></map>
+                    </set>
+                </li>
+            </condition>
+            <set name = "q#"><map name = "successor"><get name = "q#"/></map></set>
+        </think>
+        <srai>5eH7RxQUESTIONx9bP4W</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>9eR7TxTHUMBSDOWNx4pQ2W</pattern>
+    <template>
+        <think>
+            <set name = "q#"><map name = "successor"><get name = "q#"/></map></set>
+        </think>
+        <srai>5eH7RxQUESTIONx9bP4W</srai>
+    </template>
+</category>
+
+<category>
+    <pattern>8jR6FxTALLYx4pL2Q</pattern>
+    <template>
+        The following respresents
+        your thumbs-up responses to questions about five different computer science
+        career paths, with a best-possible "6 thumbs up" representing the 
+        career path I would most likely recommend for you, and "0 thumbs up" representing 
+        the career path I would least likely
+        recommend for you. Let's see how you did! <split/>
+        <get name = "na#"/> thumbs up:<break/>
+        <link>
+            <text>Network Administrator</text>
+            <url>https://www.indeed.com/career-advice/careers/what-does-a-network-administrator-do</url>
+        </link>
+        <split/>
+        <get name = "sa#"/> thumbs up:<break/>
+        <link>
+            <text>Systems Analyst</text>
+            <url>https://www.indeed.com/career-advice/careers/what-does-a-systems-analyst-do</url>
+        </link>
+        <split/>
+        <get name = "isa#"/> thumbs up:<break/>
+        <link>
+            <text>Information Security Analyst</text>
+            <url>https://www.indeed.com/career-advice/careers/what-does-a-information-security-analyst-do</url>
+        </link>
+        <split/>
+        <get name = "sd#"/> thumbs up:<break/>
+        <link>
+            <text>Software Developer</text>
+            <url>https://www.indeed.com/career-advice/careers/what-does-a-software-developer-do</url>
+        </link>
+        <split/>
+        <get name = "wd#"/> thumbs up:<break/>
+        <link>
+            <text>Web Developer</text>
+            <url>https://www.indeed.com/career-advice/careers/what-does-a-web-developer-do</url>
+        </link>
+        <split/>
+        <reply>
+            <text>Thanks! I'm all done.</text>
+            <postback>4hYsTxENDx1nJwR</postback>
+        </reply>
+        <reply>
+            <text>None of these is a good fit.</text>
+            <postback>2pL9AxALTERNATIVESx6fK7D</postback>
+        </reply>        
+    </template>
+</category>
+
+<category>
+    <pattern>4hYsTxENDx1nJwR</pattern>
+    <template>
+        Best of luck to you in your career choice. Feel free to come back any time.
+        <think><set name = "greeting">unknown</set></think>
+    </template>
+</category>
+
+<category>
+    <pattern>2pL9AxALTERNATIVESx6fK7D</pattern>
+    <template>
+        I'm sorry that these options are not satisfactory to you. Please feel free to 
+        consult the following website for more information on other computer science-related
+        careers:<break/><break/>
+        <link>
+            <text>20 Computer Scientist Degree Jobs That Pay Well</text>
+            <url>https://www.indeed.com/career-advice/finding-a-job/computer-scientist-degree</url>
+        </link>
+        <break/>
+        <srai>4hYsTxENDx1nJwR</srai>
+    </template>
+</category>
+
+</aiml>
